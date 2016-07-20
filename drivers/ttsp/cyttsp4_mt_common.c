@@ -28,6 +28,9 @@
  */
 
 #include "cyttsp4_mt_common.h"
+#ifdef CONFIG_POWERSUSPEND
+#include <linux/powersuspend.h>
+#endif
 
 static void cyttsp4_lift_all(struct cyttsp4_mt_data *md)
 {
@@ -458,6 +461,13 @@ static void cyttsp4_mt_fb_suspend(struct cyttsp4_mt_data *ts)
 	ts->fb_suspended = true;
 }
 
+#ifdef CONFIG_POWERSUSPEND
+	if (suspend_mode == POWER_SUSPEND_PANEL)
+			set_power_suspend_state_panel_hook(POWER_SUSPEND_ACTIVE);
+	else if (suspend_mode == 2)
+			set_power_suspend_state_panel_hook(POWER_SUSPEND_ACTIVE);
+#endif
+
 static void cyttsp4_mt_fb_resume(struct cyttsp4_mt_data *ts)
 {
 	struct device *dev = &ts->ttsp->dev;
@@ -470,6 +480,13 @@ static void cyttsp4_mt_fb_resume(struct cyttsp4_mt_data *ts)
 	pm_runtime_get_sync(dev);
 	ts->fb_suspended = false;
 }
+
+#ifdef CONFIG_POWERSUSPEND
+	if (suspend_mode == POWER_SUSPEND_PANEL)
+			set_power_suspend_state_panel_hook(POWER_SUSPEND_INACTIVE);
+	else if (suspend_mode == 2)
+			set_power_suspend_state_panel_hook(POWER_SUSPEND_INACTIVE);
+#endif
 
 static int fb_notifier_callback(struct notifier_block *self,
 				unsigned long event, void *data)
