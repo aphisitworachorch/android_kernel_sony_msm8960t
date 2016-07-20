@@ -3731,11 +3731,6 @@ static struct msm_thermal_data msm_thermal_pdata = {
 #ifdef CONFIG_INTELLI_THERMAL
 	.freq_control_mask = 0xf,
 #endif
-#ifdef CONFIG_OVERCLOCK
-	.core_limit_temp_degC = 90,
-#else
-	.core_limit_temp_degC = 80,
-#endif
 };
 
 #ifdef CONFIG_MSM_FAKE_BATTERY
