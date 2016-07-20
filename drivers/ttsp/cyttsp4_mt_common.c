@@ -459,7 +459,6 @@ static void cyttsp4_mt_fb_suspend(struct cyttsp4_mt_data *ts)
 
 	pm_runtime_put(dev);
 	ts->fb_suspended = true;
-}
 
 #ifdef CONFIG_POWERSUSPEND
 	if (suspend_mode == POWER_SUSPEND_PANEL)
@@ -467,6 +466,8 @@ static void cyttsp4_mt_fb_suspend(struct cyttsp4_mt_data *ts)
 	else if (suspend_mode == 2)
 			set_power_suspend_state_panel_hook(POWER_SUSPEND_ACTIVE);
 #endif
+
+}
 
 static void cyttsp4_mt_fb_resume(struct cyttsp4_mt_data *ts)
 {
@@ -479,7 +480,6 @@ static void cyttsp4_mt_fb_resume(struct cyttsp4_mt_data *ts)
 
 	pm_runtime_get_sync(dev);
 	ts->fb_suspended = false;
-}
 
 #ifdef CONFIG_POWERSUSPEND
 	if (suspend_mode == POWER_SUSPEND_PANEL)
@@ -487,6 +487,8 @@ static void cyttsp4_mt_fb_resume(struct cyttsp4_mt_data *ts)
 	else if (suspend_mode == 2)
 			set_power_suspend_state_panel_hook(POWER_SUSPEND_INACTIVE);
 #endif
+
+}
 
 static int fb_notifier_callback(struct notifier_block *self,
 				unsigned long event, void *data)
